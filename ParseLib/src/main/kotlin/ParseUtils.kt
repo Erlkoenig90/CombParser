@@ -1,3 +1,5 @@
+// Helpers for parsing
+
 package ParseLib
 
 fun indent(depth : Int) =
@@ -22,21 +24,21 @@ open class Sequence (start : Int, len : Int, private val children : Array<Node>)
 
 internal data class Chain <T> (val obj : T, val count : Int, val next : Chain<T>?)
 
-internal inline fun <reified T> toReverseArray (c : Chain<T>?) : Array<T> {
-    return if (c == null)
-        arrayOf()
-    else {
-        val res = arrayOfNulls<T>(c.count)
-        var scan = c
+internal fun <T> toReverseArray (c : Chain<T>?, klass : Class<T>) : Array<T> {
+    val res = java.lang.reflect.Array.newInstance(klass, c?.count ?: 0) as Array<T>
+    var scan = c
 
-        while (scan != null) {
-            res[scan.count - 1] = scan.obj
-            scan = scan.next
-        }
-
-        @Suppress("UNCHECKED_CAST")
-        res as Array<T>
+    while (scan != null) {
+        res[scan.count - 1] = scan.obj
+        scan = scan.next
     }
+
+    @Suppress("UNCHECKED_CAST")
+    return res
+}
+
+internal inline fun <reified T> toReverseArray (c : Chain<T>?) : Array<T> {
+    return toReverseArray(c, T::class.java)
 }
 
 internal fun <T> addChain (c : Chain<T>?, obj : T) : Chain<T> {

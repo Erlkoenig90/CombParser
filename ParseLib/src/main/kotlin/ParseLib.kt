@@ -1,3 +1,5 @@
+// Basic required parser core functions
+
 package ParseLib
 
 abstract class Parser <out T : Node> {
