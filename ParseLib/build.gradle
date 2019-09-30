@@ -10,6 +10,12 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    testImplementation(
+            'org.assertj:assertj-core:3.13.2',
+            'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    )
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.5.2')
 }
 
 compileKotlin {
@@ -17,4 +23,8 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+test {
+    useJUnitPlatform()
 }

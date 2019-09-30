@@ -34,7 +34,7 @@ internal interface ParseNext <in T : Node> {
     fun next (pos : Int, node : T) : ParseContState
 }
 
-internal typealias Continuation = (ctx : ParseContext) -> ParseContState;
+internal typealias Continuation = (ctx : ParseContext) -> ParseContState
 
 internal data class ParseContext (val str : String, val branchQueue: MutableList<Continuation> = mutableListOf())
 
